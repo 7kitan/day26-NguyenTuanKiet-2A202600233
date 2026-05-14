@@ -89,6 +89,7 @@ LEGAL_KNOWLEDGE = [
 # Tools
 # ---------------------------------------------------------------------------
 
+
 @tool
 def search_legal_database(query: str) -> str:
     """Search the legal knowledge base for relevant statutes, case law, and legal principles.
@@ -162,7 +163,9 @@ def check_compliance_requirements(industry: str, company_size: str) -> str:
     }
 
     industry_lower = industry.lower()
-    applicable = frameworks.get(industry_lower, ["FTC Act Section 5", "State consumer protection laws"])
+    applicable = frameworks.get(
+        industry_lower, ["FTC Act Section 5", "State consumer protection laws"]
+    )
     size_note = size_extras.get(company_size.lower(), "")
 
     return (
@@ -172,12 +175,32 @@ def check_compliance_requirements(industry: str, company_size: str) -> str:
     )
 
 
-TOOLS = [search_legal_database, calculate_penalty, check_compliance_requirements]
+@tool
+def search_case_law(keywords: str) -> str:
+    """Tìm kiếm án lệ theo từ khóa.
 
-QUESTION = (
-    "A tech startup with $5M revenue was caught sharing user data without consent "
-    "and failed to pay taxes on overseas revenue. What are all the legal consequences?"
-)
+    Args:
+        keywords: Từ khóa tìm kiếm
+    """
+    cases = {
+        "breach": "Hadley v. Baxendale (1854) - Consequential damages",
+        "negligence": "Donoghue v. Stevenson (1932) - Duty of care",
+        "contract": "Carlill v. Carbolic Smoke Ball Co (1893) - Unilateral contract",
+    }
+    for key, case in cases.items():
+        if key in keywords.lower():
+            return case
+    return "Không tìm thấy án lệ phù hợp"
+
+
+TOOLS = [
+    search_legal_database,
+    calculate_penalty,
+    check_compliance_requirements,
+    search_case_law,
+]
+
+QUESTION = "A tech startup with $5M revenue was caught breaching user contract. What are all the legal consequences?"
 
 SYSTEM_PROMPT = (
     "You are a legal analyst agent. You have access to tools for searching legal databases, "
@@ -223,7 +246,9 @@ async def main():
                 elif msg.type == "tool":
                     print(f"\n[Step {step}] OBSERVE (node: {node_name})")
                     content = msg.content
-                    print(f"  Result: {content[:300]}{'...' if len(content) > 300 else ''}")
+                    print(
+                        f"  Result: {content[:300]}{'...' if len(content) > 300 else ''}"
+                    )
                 elif msg.type == "ai" and msg.content:
                     print(f"\n[Step {step}] FINAL ANSWER (node: {node_name})")
                     print("-" * 70)

@@ -1,0 +1,41 @@
+======================================================================
+STAGE 1: Direct LLM Calling
+======================================================================
+
+[How it works]
+  1. We send a system prompt + user question directly to the LLM
+  2. The LLM responds from its training data only
+  3. No tools, no retrieval, no external knowledge
+
+Question: What are the employer's legal obligations when terminating an employee under Vietnamese labor law?
+----------------------------------------------------------------------
+
+>>> Calling LLM directly (no tools, no RAG)...
+
+Under Vietnamese labor law, employers have several legal obligations when terminating an employee:
+
+1. **Valid Grounds**: Termination must be based on valid grounds outlined in the Labor Code, such as repeated failure to perform duties, prolonged illness, or organizational restructuring.
+
+2. **Notice Period**: Employers must provide advance written notice—30 days for indefinite-term contracts and 3 days for definite-term contracts—unless termination is due to serious misconduct.
+
+3. **Severance Pay**: Employees are entitled to severance pay if they have worked for at least 12 months. The amount is half a month’s salary for each year of employment.
+
+4. **Unused Leave**: Employers must compensate for unused annual leave.
+
+5. **Social Insurance**: Employers must complete social insurance procedures and ensure employees receive any entitled benefits.
+
+6. **Trade Union Consultation**: For unionized employees, employers must consult with the trade union before termination.
+
+7. **Written Notice**: Termination must be documented in writing, specifying the reason and effective date.
+
+Failure to comply with these obligations may result in legal disputes or penalties. Employers should ensure adherence to all procedural and substantive requirements under the Labor Code.
+
+----------------------------------------------------------------------
+[Limitations of Stage 1]
+  - Stateless: no conversation memory between calls
+  - No tools: cannot search databases or calculate damages
+  - Knowledge cutoff: only knows what was in training data
+  - No grounding: cannot cite specific statutes or current case law
+
+Next: Stage 2 adds RAG and tools to ground responses in real data.
+======================================================================

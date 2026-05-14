@@ -65,8 +65,11 @@ uv run python stages/stage_1_direct_llm/main.py
 Mở file `stages/stage_1_direct_llm/main.py` và trả lời:
 
 1. LLM được khởi tạo như thế nào? (Tìm hàm `get_llm()`)
+- Call get_llm, create OpenAI Client.
 2. Message được gửi đến LLM có cấu trúc gì?
+- SystemMessage + HumanMessage
 3. Tại sao cần có `SystemMessage` và `HumanMessage`?
+- SystemMessage for persona/prompt defense
 
 **Bài Tập 1.1:** Thay đổi câu hỏi
 

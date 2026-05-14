@@ -36,7 +36,13 @@ LEGAL_KNOWLEDGE = [
     },
     {
         "id": "nda_trade_secret",
-        "keywords": ["nda", "non-disclosure", "confidential", "trade secret", "agreement"],
+        "keywords": [
+            "nda",
+            "non-disclosure",
+            "confidential",
+            "trade secret",
+            "agreement",
+        ],
         "text": (
             "NDA breaches may trigger both contractual and statutory liability. Under the Defend "
             "Trade Secrets Act (DTSA, 18 U.S.C. § 1836), misappropriation of trade secrets can "
@@ -71,7 +77,14 @@ LEGAL_KNOWLEDGE = [
     },
     {
         "id": "injunctive_relief",
-        "keywords": ["injunction", "restraining", "order", "equitable", "nda", "breach"],
+        "keywords": [
+            "injunction",
+            "restraining",
+            "order",
+            "equitable",
+            "nda",
+            "breach",
+        ],
         "text": (
             "Courts routinely grant temporary restraining orders (TROs) and preliminary injunctions "
             "for NDA breaches because: (1) confidential information, once disclosed, cannot be "
@@ -81,12 +94,29 @@ LEGAL_KNOWLEDGE = [
             "public interest (Winter v. Natural Resources Defense Council, 2008)."
         ),
     },
+    {
+        "id": "labor_law",
+        "keywords": [
+            "lao động",
+            "sa thải",
+            "hợp đồng lao động",
+            "labor",
+            "termination",
+        ],
+        "text": (
+            "Theo Bộ luật Lao động Việt Nam 2019, người sử dụng lao động có thể "
+            "đơn phương chấm dứt hợp đồng trong các trường hợp: (1) người lao động "
+            "thường xuyên không hoàn thành công việc; (2) bị ốm đau, tai nạn đã điều trị "
+            "12 tháng chưa khỏi; (3) thiên tai, hỏa hoạn; (4) người lao động đủ tuổi nghỉ hưu."
+        ),
+    },
 ]
 
 
 # ---------------------------------------------------------------------------
 # Tools
 # ---------------------------------------------------------------------------
+
 
 @tool
 def search_legal_database(query: str) -> str:
@@ -135,9 +165,24 @@ def calculate_damages(breach_type: str, contract_value: float) -> str:
     )
 
 
-TOOLS = [search_legal_database, calculate_damages]
+@tool
+def check_statute_of_limitations(case_type: str) -> str:
+    """Kiểm tra thời hiệu khởi kiện theo loại vụ án.
 
-QUESTION = "What are the legal consequences if a company breaches a non-disclosure agreement?"
+    Args:
+        case_type: Loại vụ án (contract, tort, property)
+    """
+    limits = {
+        "contract": "4 năm (UCC § 2-725)",
+        "tort": "2-3 năm tùy bang",
+        "property": "5 năm",
+    }
+    return limits.get(case_type.lower(), "Không xác định")
+
+
+TOOLS = [search_legal_database, calculate_damages, check_statute_of_limitations]
+
+QUESTION = "What are the statutes of limitations for a contract breach?"
 
 
 async def main():

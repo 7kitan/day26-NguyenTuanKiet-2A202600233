@@ -1,0 +1,38 @@
+======================================================================
+STAGE 2: LLM + RAG / Tools
+======================================================================
+
+[How it works]
+  1. LLM receives tools (search_legal_database, calculate_damages)
+  2. LLM decides which tools to call and with what arguments
+  3. We execute the tools and feed results back to the LLM
+  4. LLM generates a final answer grounded in retrieved data
+
+Question: What are the statutes of limitations for a contract breach?
+----------------------------------------------------------------------
+
+>>> Step 1: Asking LLM (with tools bound)...
+
+>>> Step 2: LLM requested 1 tool call(s):
+
+  Tool: check_statute_of_limitations
+  Args: {'case_type': 'contract'}
+  Result: 4 năm (UCC § 2-725)
+
+>>> Step 3: LLM generating final answer with tool results...
+
+The statute of limitations for a contract breach is **4 years**, as per **UCC § 2-725**. This means that a party must file a lawsuit within 4 years from the date the breach occurred or was discovered. If you have further questions or need assistance with a specific case, feel free to ask!
+
+----------------------------------------------------------------------
+[Improvements over Stage 1]
+  + Grounded: answers cite specific statutes (DTSA, UCC, etc.)
+  + Tool use: can search databases and calculate damages
+  + More accurate: retrieval reduces hallucination risk
+
+[Limitations of Stage 2]
+  - Manual orchestration: we wrote the tool-call loop ourselves
+  - Single pass: only one round of tool calls
+  - No reasoning loop: LLM can't decide to search again if needed
+
+Next: Stage 3 wraps this in an autonomous ReAct agent loop.
+======================================================================

@@ -1,0 +1,94 @@
+/Users/kitan/dev/day26/stages/stage_4_milti_agent/main.py:197: LangGraphDeprecatedSinceV10: create_react_agent has been moved to `langchain.agents`. Please update your import to `from langchain.agents import create_agent`. Deprecated in LangGraph V1.0 to be removed in V2.0.
+  agent = create_react_agent(model=llm, tools=[search_tax_law], prompt=tax_prompt)
+======================================================================
+STAGE 4: Multi-Agent System (In-Process)
+======================================================================
+
+[How it works]
+  1. Lead attorney agent analyses the question
+  2. Router decides which specialist agents are needed
+  3. Tax + Compliance specialists run IN PARALLEL (LangGraph Send API)
+  4. Aggregator combines all analyses into a final answer
+
+[Graph topology]
+  analyze_law -> check_routing -> [call_tax + call_compliance] -> aggregate -> END
+
+Question: If a company breaks a contract and avoids taxes, what are the legal and regulatory consequences?
+----------------------------------------------------------------------
+
+  [Node: analyze_law] Lead attorney analysing legal aspects...
+  [Node: analyze_law] Done (1336 chars)
+
+  [Node: check_routing] Determining which specialists are needed...
+    → Dispatching to tax specialist
+
+  [Node: call_tax_specialist] Tax specialist agent starting...
+  [Node: call_tax_specialist] Done (1107 chars)
+
+  [Node: aggregate] Combining all specialist analyses...
+  [Node: aggregate] Done (2261 chars)
+
+======================================================================
+FINAL ANSWER
+======================================================================
+# **Legal and Regulatory Consequences of Contract Breach and Tax Avoidance/Evasion**  
+
+## **1. Contract Breach Consequences**  
+A company that breaches a contract faces civil liability, including:  
+- **Damages**: Compensatory, consequential, or liquidated damages may be awarded to the aggrieved party.  
+- **Specific Performance**: Courts may compel the breaching party to fulfill contractual obligations.  
+- **Penalties**: Willful breaches or bad faith conduct may result in additional penalties.  
+
+Defenses such as *force majeure* or contractual limitations may mitigate liability, but deliberate breaches increase litigation risks.  
+
+## **2. Tax Avoidance vs. Evasion**  
+### **Tax Avoidance (Legal but Scrutinized)**  
+- May trigger regulatory review if deemed aggressive (e.g., under General Anti-Avoidance Rules (GAAR)).  
+- IRS penalties include:  
+  - **Accuracy-Related Penalty (IRC § 6662)**: 20% of underpayment for negligence or misstatements.  
+  - **Transfer Pricing Adjustments (IRC § 482)**: Income reallocation with penalties of 20-40% for misstatements.  
+
+### **Tax Evasion (Illegal and Criminal)**  
+- **Civil Fraud Penalty (IRC § 6663)**: 75% of underpaid tax.  
+- **Criminal Charges (26 U.S.C. § 7201)**: Up to $250,000 in fines and 5 years imprisonment.  
+- **Failure to File (IRC § 6651)**: Fines up to $25,000 and 1 year imprisonment.  
+
+## **3. Regulatory and Reputational Risks**  
+- **Audits & Penalties**: Tax authorities may impose audits, back taxes, and interest.  
+- **Reputational Harm**: Loss of business, shareholder lawsuits, or regulatory disqualifications.  
+- **Overlap Risks**: Evidence of tax fraud may strengthen claims in contract disputes (e.g., proving fraudulent intent).  
+
+## **Key Takeaways**  
+- **Contract breaches** are civil matters but may escalate if bad faith is proven.  
+- **Tax avoidance**, while legal, can still attract penalties if deemed abusive.  
+- **Tax evasion** is criminal, leading to severe fines and imprisonment.  
+- **Proactive compliance** (e.g., voluntary disclosures, proper transfer pricing documentation) can mitigate risks.  
+
+Legal counsel should assess defenses for contract disputes and ensure tax strategies comply with regulatory standards to avoid compounded liability.
+
+----------------------------------------------------------------------
+[Improvements over Stage 3]
+  + Specialisation: each agent has domain-specific expertise
+  + Parallel execution: tax + compliance agents run concurrently
+  + Better quality: specialist prompts produce deeper analysis
+  + Structured flow: explicit graph topology with routing logic
+
+[Stage 4 (Monolith) vs Stage 5 (Distributed A2A)]
+  +---------------------------+-------------------------------+
+  | Stage 4 (In-Process)      | Stage 5 (A2A Protocol)        |
+  +---------------------------+-------------------------------+
+  | Single process            | Multiple services (ports)     |
+  | Direct function calls     | HTTP-based A2A protocol       |
+  | Shared memory             | Message passing               |
+  | Simple deployment         | Independent scaling           |
+  | Tight coupling            | Loose coupling                |
+  | Easy to debug             | Service discovery + registry  |
+  | Good for small teams      | Good for large organisations  |
+  +---------------------------+-------------------------------+
+
+Stage 5 (this repo's main project) takes this same graph topology
+and deploys each agent as an independent A2A service. Run it with:
+  ./start_all.sh && python test_client.py
+======================================================================
+
+[Graph Visualization] Saved to /Users/kitan/dev/day26/stages/stage_4_milti_agent/graph.png

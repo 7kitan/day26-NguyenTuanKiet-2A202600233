@@ -1,0 +1,88 @@
+/Users/kitan/dev/day26/test_client.py:49: DeprecationWarning: A2AClient is deprecated and will be removed in a future version. Use ClientFactory to create a client with a JSON-RPC transport.
+  client = A2AClient(httpx_client=http_client, agent_card=agent_card)
+Connecting to Customer Agent at http://localhost:10100
+Question: If a company breaks a contract and avoids taxes, what are the legal and regulatory consequences?
+------------------------------------------------------------
+Connected to agent: Customer Agent v1.0.0
+------------------------------------------------------------
+Sending request (this may take 30-60s while agents chain)...
+
+RESPONSE:
+============================================================
+# **Legal Consequences of Contract Breach and Tax Avoidance by a Company**
+
+When a company breaches a contract and engages in tax avoidance (or evasion), it faces significant legal, regulatory, and financial repercussions across multiple jurisdictions. Below is a structured breakdown of the potential consequences:
+
+---
+
+## **1. Breach of Contract (Civil Liability)**
+### **Legal Basis**  
+A breach of contract occurs when a party fails to fulfill its obligations under a legally enforceable agreement. Remedies depend on the nature of the breach and applicable state or federal law.
+
+### **Consequences**  
+- **Damages**:  
+  - **Compensatory Damages**: Direct financial losses suffered by the non-breaching party.  
+  - **Consequential Damages**: Indirect losses (e.g., lost profits) if foreseeable.  
+  - **Liquidated Damages**: Pre-agreed penalties specified in the contract.  
+- **Specific Performance**: Courts may compel fulfillment of contractual duties if monetary compensation is inadequate (e.g., unique goods/services).  
+- **Reputational Harm**: Loss of business relationships, credit downgrades, or exclusion from future contracts.  
+- **Injunctive Relief**: Courts may order the breaching party to cease certain actions.  
+
+---
+
+## **2. Tax Avoidance vs. Tax Evasion (Regulatory & Criminal Liability)**
+### **Tax Avoidance (Legal but Aggressive)**
+- **Jurisdiction**: IRS, state tax authorities.  
+- **Consequences**:  
+  - **Disallowed Deductions/Credits**: IRS may reclassify transactions under the **economic substance doctrine** (IRC § 7701(o)).  
+  - **Accuracy-Related Penalties (IRC § 6662)**: 20% of underpayment if negligence or substantial understatement exists.  
+  - **Reportable Transaction Penalties (IRC § 6707A)**: For undisclosed tax shelters.  
+
+### **Tax Evasion (Illegal)**
+- **Jurisdiction**: IRS Criminal Investigation (CI), DOJ Tax Division.  
+- **Consequences**:  
+  - **Civil Fraud Penalty (IRC § 6663)**: 75% of underpayment + interest.  
+  - **Criminal Charges (26 U.S. Code § 7201)**: Felony, punishable by up to **5 years imprisonment** and **$100,000 fine** (individuals) / **$500,000** (corporations).  
+  - **Conspiracy to Defraud the U.S. (18 U.S. Code § 371)**: Additional penalties.  
+  - **SEC Enforcement**: If tax evasion distorts financial statements, the SEC may pursue **accounting fraud** charges (SOX § 302/404).  
+
+---
+
+## **3. Cross-Agency Enforcement Risks**
+### **Regulatory Bodies Involved**  
+- **IRS**: Adjustments, penalties, and criminal referrals.  
+- **DOJ**: Parallel civil and criminal proceedings.  
+- **SEC**: Material misstatements in financial filings may trigger enforcement.  
+- **FinCEN**: If tax evasion involves hidden offshore accounts, **Bank Secrecy Act (BSA) violations** may apply.  
+- **State AGs**: Some states (e.g., NY, CA) have aggressive tax fraud units.  
+
+### **Corporate Governance & Individual Liability**  
+- **Corporate Officers**: May face **responsible officer doctrine (IRC § 6672)** penalties for unpaid payroll taxes.  
+- **Board Members**: Potential **breach of fiduciary duty** claims if they approved fraudulent tax structures.  
+- **CFOs/Controllers**: **SOX § 304 clawbacks** if misconduct leads to financial restatements.  
+
+---
+
+## **4. Mitigation Strategies**  
+- **Voluntary Disclosure (IRS VDP)**: May reduce penalties if done before an audit.  
+- **Cooperation Credit (DOJ Tax Manual)**: Self-reporting and remediation may avoid criminal charges.  
+- **Compliance Programs**: Implementing robust tax governance (e.g., OECD BEPS compliance) can demonstrate good faith.  
+
+---
+
+## **5. Cross-Border Exposure**  
+- **FATCA**: Non-compliance triggers **30% withholding on U.S.-sourced payments**.  
+- **OECD Common Reporting Standard (CRS)**: Foreign tax authorities may share evasion data with the IRS.  
+- **EU DAC6**: Mandatory disclosure of aggressive tax planning.  
+
+---
+
+### **Key Takeaways**  
+- **Contract breaches** primarily lead to civil liability but may trigger regulatory scrutiny if linked to financial misreporting.  
+- **Tax avoidance** risks IRS adjustments and penalties; **tax evasion** risks criminal prosecution.  
+- **Multinational companies** face layered enforcement (IRS, DOJ, SEC, foreign regulators).  
+
+---
+
+**Disclaimer**: This analysis is for educational purposes only and does not constitute legal advice. Companies and individuals should consult licensed attorneys or tax professionals for case-specific guidance.
+============================================================

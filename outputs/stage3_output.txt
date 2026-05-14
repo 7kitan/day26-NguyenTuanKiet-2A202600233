@@ -1,0 +1,77 @@
+/Users/kitan/dev/day26/stages/stage_3_single_agent/main.py:231: LangGraphDeprecatedSinceV10: create_react_agent has been moved to `langchain.agents`. Please update your import to `from langchain.agents import create_agent`. Deprecated in LangGraph V1.0 to be removed in V2.0.
+  graph = create_react_agent(model=llm, tools=TOOLS, prompt=SYSTEM_PROMPT)
+======================================================================
+STAGE 3: Single Agent (ReAct Loop)
+======================================================================
+
+[How it works]
+  1. An autonomous agent receives a complex multi-part question
+  2. It reasons about what tools to call (Think)
+  3. It calls a tool (Act)
+  4. It observes the result and decides next steps (Observe)
+  5. It repeats until it has enough information for a final answer
+
+Question: A tech startup with $5M revenue was caught breaching user contract. What are all the legal consequences?
+----------------------------------------------------------------------
+
+[Step 1] THINK + ACT (node: agent)
+  Tool: search_legal_database
+  Args: {'query': 'legal consequences of breaching user contracts in tech industry'}
+  Tool: calculate_penalty
+  Args: {'violation_type': 'contract_breach', 'severity': 'medium', 'annual_revenue': 5000000}
+  Tool: check_compliance_requirements
+  Args: {'industry': 'technology', 'company_size': 'startup'}
+
+[Step 2] OBSERVE (node: tools)
+  Result: [data_privacy] Sharing user data without consent violates: CCPA (fines up to $7,500 per intentional violation), GDPR (fines up to 4% of global revenue or EUR 20M), FTC Act Section 5 (unfair/deceptive practices). Class action lawsuits under state privacy laws. Individual right of action under CCPA fo...
+
+[Step 3] OBSERVE (node: tools)
+  Result: Penalty Estimate for contract_breach (medium severity):
+  Base penalty: $250,000.00
+  Revenue basis: $5,000,000.00
+  Plus consequential damages, attorney's fees, and possible injunction.
+
+[Step 4] OBSERVE (node: tools)
+  Result: Applicable frameworks for technology (startup):
+  CCPA/CPRA, GDPR (if EU users), FTC Act Section 5, SOC 2
+  Consider: SOC 2 Type II for investor confidence.
+
+[Step 5] FINAL ANSWER (node: agent)
+----------------------------------------------------------------------
+Based on the function call results, here is a comprehensive legal analysis for a tech startup with $5M revenue that breached user contracts:
+
+### 1. **Contract Breach Consequences**
+   - **Penalties**: Estimated base penalty of $250,000, plus consequential damages, attorney's fees, and potential injunctions.
+   - **Legal Actions**: Users may file lawsuits for breach of contract, seeking compensation for damages incurred due to the violation.
+
+### 2. **Data Privacy Violations**
+   - **CCPA**: Fines up to $7,500 per intentional violation. Users also have the right to sue for $100–$750 per consumer in case of data breaches.
+   - **GDPR**: If EU users are affected, fines can reach up to 4% of global revenue or EUR 20 million.
+   - **FTC Act Section 5**: Penalties for unfair or deceptive practices, including sharing user data without consent.
+   - **Class Action Lawsuits**: Users may file class action lawsuits under state privacy laws.
+
+### 3. **Compliance Requirements**
+   - **Applicable Frameworks**: CCPA/CPRA, GDPR (if EU users are involved), FTC Act Section 5, and SOC 2.
+   - **Recommendations**: Obtain SOC 2 Type II certification to build investor confidence and demonstrate compliance with data security standards.
+
+### Summary
+The startup faces significant financial penalties, potential lawsuits, and reputational damage. Immediate steps should include:
+1. Addressing the contract breach and compensating affected users.
+2. Ensuring compliance with CCPA, GDPR, and FTC regulations.
+3. Implementing SOC 2 Type II certification to strengthen data security practices.
+
+This analysis highlights the legal risks and compliance obligations the startup must address to mitigate further consequences.
+
+----------------------------------------------------------------------
+[Improvements over Stage 2]
+  + Autonomous: agent decides which tools to call and when
+  + Multi-step reasoning: can search, calculate, search again
+  + Handles complex queries: breaks problems into sub-tasks
+
+[Limitations of Stage 3]
+  - Single agent: one LLM handles all domains (law, tax, compliance)
+  - No specialisation: same system prompt for all legal areas
+  - Bottleneck: sequential tool calls, no parallelism
+
+Next: Stage 4 splits this into specialised agents that work in parallel.
+======================================================================
